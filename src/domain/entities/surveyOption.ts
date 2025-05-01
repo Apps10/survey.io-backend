@@ -3,9 +3,13 @@ export class SurveyOption {
     public readonly id: string,
     public readonly surveyId: string,
     public readonly text: string,
-    public readonly countVotes: number,
+    public countVotes: number,
   ) {
     this.ensureIsValid()
+  }
+
+  newVote(): void {
+    this.countVotes++
   }
 
   private ensureIsValid() {

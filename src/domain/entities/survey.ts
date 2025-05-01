@@ -4,7 +4,7 @@ export class Survey {
   constructor(
     public readonly id: string,
     public readonly question: string,
-    public readonly totalVotes: number,
+    public totalVotes: number,
     public readonly isActive: boolean,
     public readonly options: SurveyOption[] = [], // 👈 obliga a crear al menos una opcion
     public readonly createdAt: Date,
@@ -34,5 +34,16 @@ export class Survey {
         'options must be least 2 in length and an array of SurveyOption instances',
       )
     }
+  }
+
+  addVoteToOption(optionId: string): void {
+    const option = this.options.find((o) => o.id === optionId)
+
+    if (!option) {
+      throw new Error('Option not found')
+    }
+
+    option.newVote()
+    this.totalVotes++
   }
 }

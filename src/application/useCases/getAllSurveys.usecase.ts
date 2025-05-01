@@ -1,4 +1,5 @@
 import { Survey } from 'src/domain/entities'
+import { SurveysNotExistException } from 'src/domain/exceptions/survey.exception'
 import { SurveyRepository } from 'src/domain/repositories/survey.repository'
 
 export class GetAllSurveysUseCase {
@@ -8,7 +9,7 @@ export class GetAllSurveysUseCase {
     const surveys = await this.surveyRepo.findAll()
 
     if (!surveys) {
-      throw new Error('there arent avaliable surveys')
+      throw new SurveysNotExistException()
     }
 
     return surveys

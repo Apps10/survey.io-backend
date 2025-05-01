@@ -1,5 +1,5 @@
-export interface GenericRepository <T> {
-  save(t: T): Promise<void>
+export interface GenericRepository<T> {
+  save(instance: T): Promise<void>
   findById(id: string): Promise<T | null>
-  findAll(): Promise<T[]>
+  findAll(): Promise<T[] | []>
 }

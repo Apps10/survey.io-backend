@@ -18,4 +18,5 @@ export interface ISurveyCreateDto
 export interface ISurveyVote {
   surveyId: string
   userId: string
+  optionId: string
 }
