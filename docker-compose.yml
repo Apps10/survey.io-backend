@@ -1,0 +1,18 @@
+services:
+  postgresql:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgresql
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: survey
+
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
