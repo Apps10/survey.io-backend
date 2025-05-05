@@ -132,7 +132,7 @@ exports.Prisma.SurveyScalarFieldEnum = {
   question: 'question',
   totalVotes: 'totalVotes',
   isActive: 'isActive',
-  CreatedAt: 'CreatedAt'
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.OptionScalarFieldEnum = {

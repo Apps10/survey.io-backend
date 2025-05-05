@@ -2316,7 +2316,7 @@ export namespace Prisma {
     question: string | null
     totalVotes: number | null
     isActive: boolean | null
-    CreatedAt: Date | null
+    createdAt: Date | null
   }
 
   export type SurveyMaxAggregateOutputType = {
@@ -2324,7 +2324,7 @@ export namespace Prisma {
     question: string | null
     totalVotes: number | null
     isActive: boolean | null
-    CreatedAt: Date | null
+    createdAt: Date | null
   }
 
   export type SurveyCountAggregateOutputType = {
@@ -2332,7 +2332,7 @@ export namespace Prisma {
     question: number
     totalVotes: number
     isActive: number
-    CreatedAt: number
+    createdAt: number
     _all: number
   }
 
@@ -2350,7 +2350,7 @@ export namespace Prisma {
     question?: true
     totalVotes?: true
     isActive?: true
-    CreatedAt?: true
+    createdAt?: true
   }
 
   export type SurveyMaxAggregateInputType = {
@@ -2358,7 +2358,7 @@ export namespace Prisma {
     question?: true
     totalVotes?: true
     isActive?: true
-    CreatedAt?: true
+    createdAt?: true
   }
 
   export type SurveyCountAggregateInputType = {
@@ -2366,7 +2366,7 @@ export namespace Prisma {
     question?: true
     totalVotes?: true
     isActive?: true
-    CreatedAt?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -2461,7 +2461,7 @@ export namespace Prisma {
     question: string
     totalVotes: number
     isActive: boolean
-    CreatedAt: Date
+    createdAt: Date
     _count: SurveyCountAggregateOutputType | null
     _avg: SurveyAvgAggregateOutputType | null
     _sum: SurveySumAggregateOutputType | null
@@ -2488,7 +2488,7 @@ export namespace Prisma {
     question?: boolean
     totalVotes?: boolean
     isActive?: boolean
-    CreatedAt?: boolean
+    createdAt?: boolean
     options?: boolean | Survey$optionsArgs<ExtArgs>
     _count?: boolean | SurveyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["survey"]>
@@ -2498,7 +2498,7 @@ export namespace Prisma {
     question?: boolean
     totalVotes?: boolean
     isActive?: boolean
-    CreatedAt?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["survey"]>
 
   export type SurveySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2506,7 +2506,7 @@ export namespace Prisma {
     question?: boolean
     totalVotes?: boolean
     isActive?: boolean
-    CreatedAt?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["survey"]>
 
   export type SurveySelectScalar = {
@@ -2514,10 +2514,10 @@ export namespace Prisma {
     question?: boolean
     totalVotes?: boolean
     isActive?: boolean
-    CreatedAt?: boolean
+    createdAt?: boolean
   }
 
-  export type SurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "totalVotes" | "isActive" | "CreatedAt", ExtArgs["result"]["survey"]>
+  export type SurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "totalVotes" | "isActive" | "createdAt", ExtArgs["result"]["survey"]>
   export type SurveyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     options?: boolean | Survey$optionsArgs<ExtArgs>
     _count?: boolean | SurveyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2535,7 +2535,7 @@ export namespace Prisma {
       question: string
       totalVotes: number
       isActive: boolean
-      CreatedAt: Date
+      createdAt: Date
     }, ExtArgs["result"]["survey"]>
     composites: {}
   }
@@ -2964,7 +2964,7 @@ export namespace Prisma {
     readonly question: FieldRef<"Survey", 'String'>
     readonly totalVotes: FieldRef<"Survey", 'Int'>
     readonly isActive: FieldRef<"Survey", 'Boolean'>
-    readonly CreatedAt: FieldRef<"Survey", 'DateTime'>
+    readonly createdAt: FieldRef<"Survey", 'DateTime'>
   }
     
 
@@ -5586,7 +5586,7 @@ export namespace Prisma {
     question: 'question',
     totalVotes: 'totalVotes',
     isActive: 'isActive',
-    CreatedAt: 'CreatedAt'
+    createdAt: 'createdAt'
   };
 
   export type SurveyScalarFieldEnum = (typeof SurveyScalarFieldEnum)[keyof typeof SurveyScalarFieldEnum]
@@ -5757,7 +5757,7 @@ export namespace Prisma {
     question?: StringFilter<"Survey"> | string
     totalVotes?: IntFilter<"Survey"> | number
     isActive?: BoolFilter<"Survey"> | boolean
-    CreatedAt?: DateTimeFilter<"Survey"> | Date | string
+    createdAt?: DateTimeFilter<"Survey"> | Date | string
     options?: OptionListRelationFilter
   }
 
@@ -5766,7 +5766,7 @@ export namespace Prisma {
     question?: SortOrder
     totalVotes?: SortOrder
     isActive?: SortOrder
-    CreatedAt?: SortOrder
+    createdAt?: SortOrder
     options?: OptionOrderByRelationAggregateInput
   }
 
@@ -5778,7 +5778,7 @@ export namespace Prisma {
     question?: StringFilter<"Survey"> | string
     totalVotes?: IntFilter<"Survey"> | number
     isActive?: BoolFilter<"Survey"> | boolean
-    CreatedAt?: DateTimeFilter<"Survey"> | Date | string
+    createdAt?: DateTimeFilter<"Survey"> | Date | string
     options?: OptionListRelationFilter
   }, "id">
 
@@ -5787,7 +5787,7 @@ export namespace Prisma {
     question?: SortOrder
     totalVotes?: SortOrder
     isActive?: SortOrder
-    CreatedAt?: SortOrder
+    createdAt?: SortOrder
     _count?: SurveyCountOrderByAggregateInput
     _avg?: SurveyAvgOrderByAggregateInput
     _max?: SurveyMaxOrderByAggregateInput
@@ -5803,7 +5803,7 @@ export namespace Prisma {
     question?: StringWithAggregatesFilter<"Survey"> | string
     totalVotes?: IntWithAggregatesFilter<"Survey"> | number
     isActive?: BoolWithAggregatesFilter<"Survey"> | boolean
-    CreatedAt?: DateTimeWithAggregatesFilter<"Survey"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Survey"> | Date | string
   }
 
   export type OptionWhereInput = {
@@ -5972,7 +5972,7 @@ export namespace Prisma {
     question: string
     totalVotes?: number
     isActive: boolean
-    CreatedAt?: Date | string
+    createdAt?: Date | string
     options?: OptionCreateNestedManyWithoutSurveyInput
   }
 
@@ -5981,7 +5981,7 @@ export namespace Prisma {
     question: string
     totalVotes?: number
     isActive: boolean
-    CreatedAt?: Date | string
+    createdAt?: Date | string
     options?: OptionUncheckedCreateNestedManyWithoutSurveyInput
   }
 
@@ -5990,7 +5990,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     options?: OptionUpdateManyWithoutSurveyNestedInput
   }
 
@@ -5999,7 +5999,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     options?: OptionUncheckedUpdateManyWithoutSurveyNestedInput
   }
 
@@ -6008,7 +6008,7 @@ export namespace Prisma {
     question: string
     totalVotes?: number
     isActive: boolean
-    CreatedAt?: Date | string
+    createdAt?: Date | string
   }
 
   export type SurveyUpdateManyMutationInput = {
@@ -6016,7 +6016,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SurveyUncheckedUpdateManyInput = {
@@ -6024,7 +6024,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OptionCreateInput = {
@@ -6232,7 +6232,7 @@ export namespace Prisma {
     question?: SortOrder
     totalVotes?: SortOrder
     isActive?: SortOrder
-    CreatedAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type SurveyAvgOrderByAggregateInput = {
@@ -6244,7 +6244,7 @@ export namespace Prisma {
     question?: SortOrder
     totalVotes?: SortOrder
     isActive?: SortOrder
-    CreatedAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type SurveyMinOrderByAggregateInput = {
@@ -6252,7 +6252,7 @@ export namespace Prisma {
     question?: SortOrder
     totalVotes?: SortOrder
     isActive?: SortOrder
-    CreatedAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type SurveySumOrderByAggregateInput = {
@@ -6760,7 +6760,7 @@ export namespace Prisma {
     question: string
     totalVotes?: number
     isActive: boolean
-    CreatedAt?: Date | string
+    createdAt?: Date | string
   }
 
   export type SurveyUncheckedCreateWithoutOptionsInput = {
@@ -6768,7 +6768,7 @@ export namespace Prisma {
     question: string
     totalVotes?: number
     isActive: boolean
-    CreatedAt?: Date | string
+    createdAt?: Date | string
   }
 
   export type SurveyCreateOrConnectWithoutOptionsInput = {
@@ -6814,7 +6814,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SurveyUncheckedUpdateWithoutOptionsInput = {
@@ -6822,7 +6822,7 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     totalVotes?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VoteUpsertWithWhereUniqueWithoutOptionInput = {

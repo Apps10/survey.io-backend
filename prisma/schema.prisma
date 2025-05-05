@@ -31,7 +31,7 @@ model Survey {
   options       Option[] 
   totalVotes    Int       @default(0)
   isActive      Boolean
-  CreatedAt     DateTime  @default(now())
+  createdAt     DateTime  @default(now())
 }
 
 model Option {

@@ -5,4 +5,7 @@ export interface ISurveyOptionDto {
   countVotes: number
 }
 
-export type ISurveyOptionCreateDto = Omit<ISurveyOptionDto, 'countVotes'>
+export type ISurveyOptionCreateDto = Omit<
+  ISurveyOptionDto,
+  'countVotes' | 'surveyId'
+>

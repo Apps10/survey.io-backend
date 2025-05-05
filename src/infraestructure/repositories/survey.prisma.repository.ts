@@ -1,9 +1,9 @@
-import { ISurvey } from 'src/application/dtos/survey.dto'
-import { ISurveyOptionDto } from 'src/application/dtos/surveyOption.dto'
-import { Survey, SurveyOption } from 'src/domain/entities'
+import { Injectable } from '@nestjs/common'
+import { Survey } from 'src/domain/entities'
 import { SurveyRepository } from 'src/domain/repositories/survey.repository'
 import { PrismaService } from 'src/shared/services/prisma.service'
 
+@Injectable()
 export class SurveyPrismaRepository implements SurveyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -11,10 +11,7 @@ export class SurveyPrismaRepository implements SurveyRepository {
     await this.prisma.survey.upsert({
       where: { id: survey.id },
       update: {
-        question: survey.question,
-        totalVotes: survey.totalVotes,
-        isActive: survey.isActive,
-        CreatedAt: survey.createdAt,
+        ...survey,
         options: {
           deleteMany: {}, // Limpia opciones anteriores
           create: survey.options.map((o) => ({
@@ -25,11 +22,7 @@ export class SurveyPrismaRepository implements SurveyRepository {
         },
       },
       create: {
-        id: survey.id,
-        question: survey.question,
-        totalVotes: survey.totalVotes,
-        isActive: survey.isActive,
-        CreatedAt: survey.createdAt,
+        ...survey,
         options: {
           create: survey.options.map((o) => ({
             id: o.id,
@@ -55,22 +48,11 @@ export class SurveyPrismaRepository implements SurveyRepository {
       where: {
         isActive: true,
       },
+      include: {
+        options: true,
+      },
     })
-
-    return surveys.map(
-      (s: ISurvey) =>
-        new Survey(
-          s.id,
-          s.question,
-          s.totalVotes,
-          s.isActive,
-          s.options.map(
-            (o: ISurveyOptionDto) =>
-              new SurveyOption(o.id, s.id, o.text, o.countVotes),
-          ),
-          s.CreatedAt,
-        ),
-    )
+    return Survey.fromPrimitiveArray(surveys)
   }
 
   async findById(id: string): Promise<Survey | null> {
@@ -87,17 +69,7 @@ export class SurveyPrismaRepository implements SurveyRepository {
       return null
     }
 
-    return new Survey(
-      survey.id,
-      survey.question,
-      survey.totalVotes,
-      survey.isActive,
-      survey.options.map(
-        (o: ISurveyOptionDto) =>
-          new SurveyOption(o.id, survey.id, o.text, o.countVotes),
-      ),
-      survey.CreatedAt,
-    )
+    return Survey.fromPrimitives(survey)
   }
 
   async saveUserVote(userId: string, optionId: string): Promise<void> {

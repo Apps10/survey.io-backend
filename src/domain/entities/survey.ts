@@ -1,5 +1,13 @@
-import { SurveyOption } from './surveyOption'
+import { ISurveyOptionPrimitive, SurveyOption } from './surveyOption'
 
+export interface ISurveyPrimivite {
+  id: string
+  question: string
+  totalVotes: number
+  isActive: boolean
+  options: ISurveyOptionPrimitive[]
+  createdAt: Date
+}
 export class Survey {
   constructor(
     public readonly id: string,
@@ -27,13 +35,35 @@ export class Survey {
 
     if (
       !Array.isArray(this.options) ||
-      this.options.length <= 2 ||
+      this.options.length < 2 ||
       !this.options.every((opt) => opt instanceof SurveyOption)
     ) {
       throw new Error(
         'options must be least 2 in length and an array of SurveyOption instances',
       )
     }
+  }
+
+  static fromPrimitives({
+    id,
+    createdAt,
+    isActive,
+    options,
+    question,
+    totalVotes,
+  }: ISurveyPrimivite) {
+    return new Survey(
+      id,
+      question,
+      totalVotes,
+      isActive,
+      SurveyOption.fromPrimiviteArray(options),
+      createdAt,
+    )
+  }
+
+  static fromPrimitiveArray(array: ISurveyPrimivite[]) {
+    return array.map((a) => Survey.fromPrimitives(a))
   }
 
   addVoteToOption(optionId: string): void {

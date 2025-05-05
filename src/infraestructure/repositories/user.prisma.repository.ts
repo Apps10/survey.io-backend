@@ -1,9 +1,10 @@
-import { PrismaClient } from 'generated/prisma'
+import { Injectable } from '@nestjs/common'
 import { User, UserRole } from 'src/domain/entities'
 import { UserRepository } from 'src/domain/repositories/user.respository'
-
+import { PrismaService } from 'src/shared/services/prisma.service'
+@Injectable()
 export class UserPrismaRepository implements UserRepository {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll(): Promise<User[]> {
     const users = await this.prisma.user.findMany()

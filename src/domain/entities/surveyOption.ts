@@ -1,3 +1,10 @@
+export interface ISurveyOptionPrimitive {
+  id: string
+  surveyId: string
+  text: string
+  countVotes: number
+}
+
 export class SurveyOption {
   constructor(
     public readonly id: string,
@@ -28,5 +35,18 @@ export class SurveyOption {
     if (this.countVotes < 0 || typeof this.countVotes != 'number') {
       throw new Error('countVotes must be a number greater than or equals 0')
     }
+  }
+
+  static fromPrimivites({
+    countVotes,
+    id,
+    surveyId,
+    text,
+  }: ISurveyOptionPrimitive): SurveyOption {
+    return new SurveyOption(id, surveyId, text, countVotes)
+  }
+
+  static fromPrimiviteArray(array: ISurveyOptionPrimitive[]): SurveyOption[] {
+    return array.map((o) => SurveyOption.fromPrimivites(o))
   }
 }
