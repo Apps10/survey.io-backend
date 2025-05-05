@@ -1,8 +1,15 @@
 const UserRolArray = ['admin', 'user'] as const
 export type UserRole = (typeof UserRolArray)[number]
-export type UserRoleEnum = {
-  ADMIN: 'admin'
-  USER: 'user'
+export enum UserRoleEnum {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
+export interface UserPrimitive {
+  id: string
+  email: string
+  password: string
+  role: UserRole
 }
 
 export class User {
@@ -35,5 +42,9 @@ export class User {
     if (!UserRolArray.includes(this.role)) {
       throw new Error('userRole is invalid')
     }
+  }
+
+  static fromPrimitives({ id, email, password, role }: UserPrimitive) {
+    return new User(id, email, password, role)
   }
 }

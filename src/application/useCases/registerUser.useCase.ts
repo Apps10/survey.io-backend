@@ -1,22 +1,33 @@
-import { HashService } from 'src/domain/services/hash.service'
-import { UserPrismaRepository } from 'src/infraestructure/repositories'
-
+import { User } from 'src/domain/entities'
+import { RegisterUserDto } from '../dtos/user.dto'
+import { UserAlreadyExistException } from 'src/domain/exceptions'
+import { HashService, JwtService } from 'src/domain/services'
+import { UserRepository } from 'src/domain/repositories'
 export class RegisterUserUseCase {
   constructor(
-    private readonly userRepository: UserPrismaRepository,
+    private readonly userRepo: UserRepository,
     private readonly hashService: HashService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async execute(email: string, password: string): Promise<User> {
-    const user = await this.userRepository.findByEmail(email)
+  async execute(dto: RegisterUserDto): Promise<{ token: string }> {
+    const userExist = await this.userRepo.findByEmail(dto.email)
 
-    if (
-      !user &&
-      !(await this.hashService.comparePassword(password, user!.password))
-    ) {
-      throw new UserUnAuthorizedException()
+    if (userExist) {
+      throw new UserAlreadyExistException()
     }
 
-    return user as User
+    const hashedPassword = await this.hashService.hashPassword(dto.password)
+    const user = User.fromPrimitives({
+      ...dto,
+      password: hashedPassword,
+    })
+
+    await this.userRepo.save(user)
+
+    const { password, ...payload } = dto
+    const token = this.jwtService.sign(payload)
+
+    return { token }
   }
 }
