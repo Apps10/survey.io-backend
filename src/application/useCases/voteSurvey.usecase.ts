@@ -5,7 +5,7 @@ import {
   SurveyOptionNotFoundException,
 } from 'src/domain/exceptions/survey.exception'
 
-export class VoiteSurveyUseCase {
+export class VoteSurveyUseCase {
   constructor(private readonly SurveyRepo: SurveyRepository) {}
 
   async execute({ surveyId, optionId, userId }: ISurveyVote): Promise<void> {

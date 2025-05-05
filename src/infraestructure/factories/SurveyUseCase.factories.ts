@@ -5,6 +5,7 @@ import {
   CreateSurveyUseCase,
   GetAllSurveysUseCase,
   GetSurveyByIdUseCase,
+  VoteSurveyUseCase,
 } from 'src/application/useCases'
 
 @InjectableCustom()
@@ -24,5 +25,9 @@ export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
 
   getSurveyById(): GetSurveyByIdUseCase {
     return new GetSurveyByIdUseCase(this.surveyRepo)
+  }
+
+  voteSurvey(): VoteSurveyUseCase {
+    return new VoteSurveyUseCase(this.surveyRepo)
   }
 }

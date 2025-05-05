@@ -6,8 +6,6 @@ import {
   IsString,
   IsUUID,
   Length,
-  Max,
-  Min,
   ValidateNested,
 } from 'class-validator'
 import { Type } from 'class-transformer'

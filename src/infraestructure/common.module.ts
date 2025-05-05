@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common'
-import { CreateSurveyController, GetAllSurveyController } from './controllers'
+import {
+  CreateSurveyController,
+  GetAllSurveyController,
+} from './api/controllers'
 import { PrismaService } from 'src/shared/services/prisma.service'
 import { LoginUserUseCase } from 'src/application/useCases'
 import { SurveyPrismaRepository } from './repositories'
