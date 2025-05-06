@@ -11,10 +11,9 @@ export class LoginUserUseCase {
 
   async execute(email: string, password: string): Promise<{ token: string }> {
     const user = await this.userRepository.findByEmail(email)
-
     if (
-      !user &&
-      !(await this.hashService.comparePassword(password, user!.password))
+      !user ||
+      !(await this.hashService.comparePassword(password, user.password))
     ) {
       throw new UserUnAuthorizedException()
     }

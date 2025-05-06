@@ -18,6 +18,7 @@ import { HASH_SERVICE, JWT_SERVICE } from 'src/domain/services'
 import { JwtServiceAdapter } from './services'
 import { BcryptService } from 'src/shared/services/bcrypt.service'
 import { BcryptHashServiceAdapter } from './adapter/BcryptHashService.adapter'
+import { LoginUserController } from './api/controllers/loginUser.controller'
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { BcryptHashServiceAdapter } from './adapter/BcryptHashService.adapter'
     CreateSurveyController,
     GetAllSurveyController,
     RegisterUserController,
+    LoginUserController,
   ],
   providers: [
     PrismaService,
