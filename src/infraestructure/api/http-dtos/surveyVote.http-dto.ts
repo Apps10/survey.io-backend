@@ -8,8 +8,4 @@ export class SurveyVoteHttpDto {
   @IsString()
   @IsUUID()
   surveyId: string
-
-  @IsString()
-  @IsUUID()
-  userId: string
 }

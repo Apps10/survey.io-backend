@@ -19,6 +19,7 @@ import { JwtServiceAdapter } from './services'
 import { BcryptService } from 'src/shared/services/bcrypt.service'
 import { BcryptHashServiceAdapter } from './adapter/BcryptHashService.adapter'
 import { LoginUserController } from './api/controllers/loginUser.controller'
+import { JwtAuthGuard } from './guards/jwtAuth.guard'
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { LoginUserController } from './api/controllers/loginUser.controller'
     LoginUserUseCase,
     BcryptService,
     BcryptHashServiceAdapter,
+    JwtAuthGuard,
     {
       provide: SURVEY_REPOSITORY,
       useClass: SurveyPrismaRepository,
