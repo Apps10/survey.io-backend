@@ -1,2 +1,5 @@
 export * from './createSurvey.controller'
 export * from './getAllSurvey.controller'
+export * from './loginUser.controller'
+export * from './registerUser.controller'
+export * from './voteSurvey.controller'

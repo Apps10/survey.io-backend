@@ -1,25 +1,27 @@
 import { JwtModule, JwtService as NestJwtService } from '@nestjs/jwt'
 import { Module } from '@nestjs/common'
-import { PrismaService } from 'src/shared/services'
 import { LoginUserUseCase, RegisterUserUseCase } from 'src/application/useCases'
 import { SurveyPrismaRepository, UserPrismaRepository } from './repositories'
-import { SurveyUseCaseFactoryImp } from './factories'
-import { SURVEY_USE_CASE_FACTORY } from '../application/factories'
 import { SURVEY_REPOSITORY, USER_REPOSITORY } from 'src/domain/repositories'
 import { JWT_SECRET } from 'src/shared/config'
+import { HASH_SERVICE, JWT_SERVICE } from 'src/domain/services'
+import { JwtServiceAdapter } from './services'
+import { BcryptService, PrismaService } from 'src/shared/services'
+import { BcryptHashServiceAdapter } from './adapter'
+import { JwtAuthGuard, RolesGuard } from './guards'
+import { SurveyGateway } from '../infraestructure/gateway'
+import { SurveyUseCaseFactoryImp, UserUseCaseFactoryImp } from './factories'
 import {
   CreateSurveyController,
   GetAllSurveyController,
+  LoginUserController,
+  RegisterUserController,
+  VoteSurveyController,
 } from './api/controllers'
-import { RegisterUserController } from './api/controllers/registerUser.controller'
-import { USER_USE_CASES_FACTORY } from 'src/application/factories/userUseCases.factory'
-import { UserUseCaseFactoryImp } from './factories/userUseCase.factory'
-import { HASH_SERVICE, JWT_SERVICE } from 'src/domain/services'
-import { JwtServiceAdapter } from './services'
-import { BcryptService } from 'src/shared/services/bcrypt.service'
-import { BcryptHashServiceAdapter } from './adapter/BcryptHashService.adapter'
-import { LoginUserController } from './api/controllers/loginUser.controller'
-import { JwtAuthGuard } from './guards/jwtAuth.guard'
+import {
+  USER_USE_CASES_FACTORY,
+  SURVEY_USE_CASE_FACTORY,
+} from 'src/application/factories'
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { JwtAuthGuard } from './guards/jwtAuth.guard'
     GetAllSurveyController,
     RegisterUserController,
     LoginUserController,
+    VoteSurveyController,
   ],
   providers: [
     PrismaService,
@@ -46,6 +49,8 @@ import { JwtAuthGuard } from './guards/jwtAuth.guard'
     BcryptService,
     BcryptHashServiceAdapter,
     JwtAuthGuard,
+    RolesGuard,
+    SurveyGateway,
     {
       provide: SURVEY_REPOSITORY,
       useClass: SurveyPrismaRepository,
