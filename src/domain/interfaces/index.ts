@@ -1,0 +1,1 @@
+export * from './voteCache.interface'

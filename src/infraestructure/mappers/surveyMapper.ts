@@ -28,4 +28,8 @@ export class SurveyMapperImp implements SurveyMapper {
       createdAt: survey.createdAt,
     }
   }
+
+  SurveysToPrimitives(surveys: Survey[]): ISurveyPrimivite[] {
+    return surveys.map((survey) => this.SurveyToPrimitive(survey))
+  }
 }

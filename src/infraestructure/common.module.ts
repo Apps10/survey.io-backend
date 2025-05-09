@@ -27,6 +27,9 @@ import {
   SURVEY_USE_CASE_FACTORY,
 } from 'src/application/factories'
 import { SurveyNotifierGatewayAdapter } from './adapter/SurveyNotifierGateway.adapter'
+import { SURVEY_CACHE } from 'src/domain/interfaces/voteCache.interface'
+import { SurveyCacheService } from './services/voteSurveyCache.service'
+import { RedisProvider } from './provider/redis.provider'
 
 @Module({
   imports: [
@@ -86,6 +89,10 @@ import { SurveyNotifierGatewayAdapter } from './adapter/SurveyNotifierGateway.ad
     {
       provide: USER_USE_CASES_FACTORY,
       useClass: UserUseCaseFactoryImp,
+    },
+    {
+      provide: SURVEY_CACHE,
+      useFactory: () => new SurveyCacheService(RedisProvider.getConnection()),
     },
   ],
   exports: [SURVEY_USE_CASE_FACTORY, USER_USE_CASES_FACTORY, SurveyGateway],

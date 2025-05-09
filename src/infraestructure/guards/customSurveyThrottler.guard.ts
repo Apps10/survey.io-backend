@@ -1,12 +1,12 @@
-import { ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
+import { User, UserRole } from 'src/domain/entities'
+import { ExecutionContext, Injectable } from '@nestjs/common'
 import {
   ThrottlerGuard,
   ThrottlerModuleOptions,
   ThrottlerRequest,
   ThrottlerStorage,
 } from '@nestjs/throttler'
-import { User, UserRole } from 'src/domain/entities'
 
 type RateLimitCustom = { ttlInSeconds: number; rateLimit: number }
 type RateLimitCustomObjects = Record<UserRole | 'guest', RateLimitCustom>
