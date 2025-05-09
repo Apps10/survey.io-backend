@@ -7,12 +7,20 @@ import {
   GetSurveyByIdUseCase,
   VoteSurveyUseCase,
 } from 'src/application/useCases'
+import {
+  SURVEY_NOTIFIER_SERVICE,
+  SurveyNotifierService,
+} from 'src/domain/services'
+import { SurveyMapperImp } from '../mappers'
 
 @InjectableCustom()
 export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
   constructor(
     @InjectCustom(SURVEY_REPOSITORY)
     private readonly surveyRepo: SurveyRepository,
+
+    @InjectCustom(SURVEY_NOTIFIER_SERVICE)
+    private readonly surveyNotify: SurveyNotifierService,
   ) {}
 
   createSurvey(): CreateSurveyUseCase {
@@ -28,6 +36,10 @@ export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
   }
 
   voteSurvey(): VoteSurveyUseCase {
-    return new VoteSurveyUseCase(this.surveyRepo)
+    return new VoteSurveyUseCase(
+      this.surveyRepo,
+      this.surveyNotify,
+      new SurveyMapperImp(),
+    )
   }
 }

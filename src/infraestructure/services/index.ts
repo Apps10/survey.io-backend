@@ -1,1 +1,1 @@
-export * from './jwt.service.adapter'
+export * from '../adapter/jwt.service.adapter'

@@ -8,20 +8,28 @@ export class SurveyPrismaRepository implements SurveyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async save(survey: Survey): Promise<void> {
-    await this.prisma.survey.upsert({
+    const existingSurvey = await this.prisma.survey.findUnique({
       where: { id: survey.id },
-      update: {
-        ...survey,
-        options: {
-          deleteMany: {}, // Limpia opciones anteriores
-          create: survey.options.map((o) => ({
-            id: o.id,
-            text: o.text,
-            countVotes: o.countVotes,
-          })),
+    })
+
+    if (existingSurvey) {
+      await this.prisma.survey.update({
+        where: { id: survey.id },
+        data: {
+          ...survey,
+          options: {
+            updateMany: survey.options.map(({ surveyId, ...o }) => ({
+              data: { ...o },
+              where: { id: o.id },
+            })),
+          },
         },
-      },
-      create: {
+      })
+      return
+    }
+
+    await this.prisma.survey.create({
+      data: {
         ...survey,
         options: {
           create: survey.options.map((o) => ({

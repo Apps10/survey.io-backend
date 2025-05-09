@@ -4,7 +4,11 @@ import { LoginUserUseCase, RegisterUserUseCase } from 'src/application/useCases'
 import { SurveyPrismaRepository, UserPrismaRepository } from './repositories'
 import { SURVEY_REPOSITORY, USER_REPOSITORY } from 'src/domain/repositories'
 import { JWT_SECRET } from 'src/shared/config'
-import { HASH_SERVICE, JWT_SERVICE } from 'src/domain/services'
+import {
+  HASH_SERVICE,
+  JWT_SERVICE,
+  SURVEY_NOTIFIER_SERVICE,
+} from 'src/domain/services'
 import { JwtServiceAdapter } from './services'
 import { BcryptService, PrismaService } from 'src/shared/services'
 import { BcryptHashServiceAdapter } from './adapter'
@@ -22,6 +26,7 @@ import {
   USER_USE_CASES_FACTORY,
   SURVEY_USE_CASE_FACTORY,
 } from 'src/application/factories'
+import { SurveyNotifierGatewayAdapter } from './adapter/SurveyNotifierGateway.adapter'
 
 @Module({
   imports: [
@@ -64,6 +69,10 @@ import {
       useClass: UserPrismaRepository,
     },
     {
+      provide: SURVEY_NOTIFIER_SERVICE,
+      useClass: SurveyNotifierGatewayAdapter,
+    },
+    {
       provide: JWT_SERVICE,
       useFactory: (jwt: NestJwtService) => new JwtServiceAdapter(jwt),
       inject: [NestJwtService],
@@ -79,6 +88,6 @@ import {
       useClass: UserUseCaseFactoryImp,
     },
   ],
-  exports: [SURVEY_USE_CASE_FACTORY, USER_USE_CASES_FACTORY],
+  exports: [SURVEY_USE_CASE_FACTORY, USER_USE_CASES_FACTORY, SurveyGateway],
 })
 export class CommonModule {}

@@ -3,10 +3,11 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
-  SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
+import { ISurveyOptionPrimitive } from 'src/domain/entities'
 
 @WebSocketGateway({
   cors: {
@@ -16,6 +17,7 @@ import { Server, Socket } from 'socket.io'
 export class SurveyGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  @WebSocketServer()
   server: Server
 
   afterInit() {
@@ -30,11 +32,16 @@ export class SurveyGateway
     console.log(`Client disconnected: ${client.id}`)
   }
 
-  @SubscribeMessage('vote')
-  handleVote(@MessageBody() data: { surveyId: string; optionId: string }) {
+  handleVote(
+    @MessageBody()
+    data: {
+      surveyId: string
+      options: ISurveyOptionPrimitive[]
+    },
+  ) {
     this.server.emit('vote-update', {
       surveyId: data.surveyId,
-      optionId: data.optionId,
+      options: data.options,
     })
   }
 }

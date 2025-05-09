@@ -1,3 +1,4 @@
+import { Throttle } from '@nestjs/throttler'
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
 import {
   SURVEY_USE_CASE_FACTORY,
@@ -19,6 +20,12 @@ export class VoteSurveyController {
   ) {}
 
   @HttpCode(201)
+  @Throttle({
+    default: {
+      limit: 1,
+      ttl: 60,
+    },
+  }) // máximo 5 peticiones por minuto
   @Post('vote')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @AllowRoles('admin', 'user')
