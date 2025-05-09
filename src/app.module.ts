@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
 import { CommonModule } from './infraestructure/common.module'
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
-import { APP_GUARD } from '@nestjs/core'
+import { ThrottlerModule } from '@nestjs/throttler'
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
+import { RedisProvider } from './infraestructure/provider/redis.provider'
 
 @Module({
   imports: [
@@ -9,18 +10,12 @@ import { APP_GUARD } from '@nestjs/core'
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          ttl: 60,
-          limit: 2,
+          ttl: 0,
+          limit: 0,
         },
       ],
+      storage: new ThrottlerStorageRedisService(RedisProvider.getConnection()),
     }),
-  ],
-  controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
   ],
 })
 export class AppModule {}

@@ -1,16 +1,18 @@
 import { Throttle } from '@nestjs/throttler'
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
+import { InjectCustom } from 'src/shared/decorators'
+import { SurveyVoteHttpDto } from '../http-dtos/surveyVote.http-dto'
+import { UserDecorator, AllowRoles } from 'src/infraestructure/decorators'
+import { User } from 'src/domain/entities'
+import {
+  CustomSurveyThrottlerGuard,
+  RolesGuard,
+  JwtAuthGuard,
+} from 'src/infraestructure/guards'
 import {
   SURVEY_USE_CASE_FACTORY,
   SurveyUseCaseFactory,
 } from 'src/application/factories'
-import { InjectCustom } from 'src/shared/decorators'
-import { SurveyVoteHttpDto } from '../http-dtos/surveyVote.http-dto'
-import { JwtAuthGuard } from 'src/infraestructure/guards/jwtAuth.guard'
-import { AllowRoles } from 'src/infraestructure/decorators/roles.decorator'
-import { RolesGuard } from 'src/infraestructure/guards/roles.guard'
-import { UserDecorator } from 'src/infraestructure/decorators/user.decorator'
-import { User } from 'src/domain/entities'
 
 @Controller('surveys')
 export class VoteSurveyController {
@@ -20,15 +22,10 @@ export class VoteSurveyController {
   ) {}
 
   @HttpCode(201)
-  @Throttle({
-    default: {
-      limit: 1,
-      ttl: 60,
-    },
-  }) // máximo 5 peticiones por minuto
   @Post('vote')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard, CustomSurveyThrottlerGuard)
   @AllowRoles('admin', 'user')
+  @Throttle({ default: { ttl: 0, limit: 0 } })
   async run(@Body() dto: SurveyVoteHttpDto, @UserDecorator() user: User) {
     const useCase = this.surveUseCaseFactory.voteSurvey()
     await useCase.execute({ ...dto, userId: user.id })

@@ -7,6 +7,13 @@ const envSchema = z.object({
     .transform(Number)
     .refine((val) => !isNaN(val), { message: 'PORT must be a number in ENV' }),
   JWT_SECRET: z.string().min(1, 'JWT_SECRET is required'),
+  REDIS_HOST: z.string({ message: 'REDIS_HOST is required' }),
+  REDIS_PORT: z
+    .string()
+    .transform(Number)
+    .refine((val) => !isNaN(val), {
+      message: 'REDIS_PORT must be a number in ENV',
+    }),
 })
 type EnvVars = z.infer<typeof envSchema>
 
@@ -34,4 +41,4 @@ class Envs {
   }
 }
 
-export const { JWT_SECRET, PORT } = Envs.getInstance()
+export const { JWT_SECRET, PORT, REDIS_HOST, REDIS_PORT } = Envs.getInstance()

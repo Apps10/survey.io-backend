@@ -4,15 +4,28 @@ services:
     restart: always
     shm_size: 128mb
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       POSTGRES_USER: postgresql
       POSTGRES_PASSWORD: example
       POSTGRES_DB: survey
 
-    
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8083:8080
+
+  redis:
+    image: redis
+    ports:
+      - ${REDIS_PORT}:6379
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - 8081:8081
