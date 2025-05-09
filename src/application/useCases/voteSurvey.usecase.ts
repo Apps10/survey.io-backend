@@ -1,17 +1,19 @@
 import { SurveyRepository } from 'src/domain/repositories'
 import { SurveyNotifierService } from 'src/domain/services'
 import { ISurveyVote } from '../dtos'
+import { SurveyMapper } from 'src/domain/mappers'
+import { SurveyCache } from 'src/domain/interfaces'
 import {
   SurveyNotFoundException,
   SurveyOptionNotFoundException,
 } from 'src/domain/exceptions'
-import { SurveyMapper } from 'src/domain/mappers/survey.mapper'
 
 export class VoteSurveyUseCase {
   constructor(
     private readonly SurveyRepo: SurveyRepository,
     private readonly notifier: SurveyNotifierService,
     private readonly surveyMapper: SurveyMapper,
+    private readonly surveyCache: SurveyCache,
   ) {}
 
   async execute({ surveyId, optionId, userId }: ISurveyVote): Promise<void> {
@@ -34,6 +36,7 @@ export class VoteSurveyUseCase {
       survey.options,
     )
 
+    await this.surveyCache.set(surveyId, { ...survey })
     this.notifier.NotifyVote(surveyId, surveyOptionsPrimitive)
   }
 }

@@ -21,7 +21,7 @@ export class VoteSurveyController {
     private readonly surveUseCaseFactory: SurveyUseCaseFactory,
   ) {}
 
-  @HttpCode(201)
+  @HttpCode(204)
   @Post('vote')
   @UseGuards(JwtAuthGuard, RolesGuard, CustomSurveyThrottlerGuard)
   @AllowRoles('admin', 'user')
@@ -29,8 +29,6 @@ export class VoteSurveyController {
   async run(@Body() dto: SurveyVoteHttpDto, @UserDecorator() user: User) {
     const useCase = this.surveUseCaseFactory.voteSurvey()
     await useCase.execute({ ...dto, userId: user.id })
-    return {
-      message: 'ok',
-    }
+    return
   }
 }

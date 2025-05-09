@@ -30,6 +30,7 @@ import { SurveyNotifierGatewayAdapter } from './adapter/SurveyNotifierGateway.ad
 import { SURVEY_CACHE } from 'src/domain/interfaces/voteCache.interface'
 import { SurveyCacheService } from './services/voteSurveyCache.service'
 import { RedisProvider } from './provider/redis.provider'
+import { GetSurveyByIdController } from './api/controllers/getSurveyById.controller'
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { RedisProvider } from './provider/redis.provider'
     RegisterUserController,
     LoginUserController,
     VoteSurveyController,
+    GetSurveyByIdController,
   ],
   providers: [
     PrismaService,

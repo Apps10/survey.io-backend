@@ -1,6 +1,8 @@
-import { SurveyUseCaseFactory } from 'src/application/factories/SurveyUseCases.factory'
+import { SurveyUseCaseFactory } from 'src/application/factories'
 import { SURVEY_REPOSITORY, SurveyRepository } from 'src/domain/repositories'
 import { InjectableCustom, InjectCustom } from 'src/shared/decorators'
+import { SurveyMapperImp } from '../mappers'
+import { SURVEY_CACHE, SurveyCache } from 'src/domain/interfaces'
 import {
   CreateSurveyUseCase,
   GetAllSurveysUseCase,
@@ -11,11 +13,6 @@ import {
   SURVEY_NOTIFIER_SERVICE,
   SurveyNotifierService,
 } from 'src/domain/services'
-import { SurveyMapperImp } from '../mappers'
-import {
-  SURVEY_CACHE,
-  SurveyCache,
-} from 'src/domain/interfaces/voteCache.interface'
 
 @InjectableCustom()
 export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
@@ -44,7 +41,7 @@ export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
   }
 
   getSurveyById(): GetSurveyByIdUseCase {
-    return new GetSurveyByIdUseCase(this.surveyRepo)
+    return new GetSurveyByIdUseCase(this.surveyRepo, this.surveyCache)
   }
 
   voteSurvey(): VoteSurveyUseCase {
@@ -52,6 +49,7 @@ export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
       this.surveyRepo,
       this.surveyNotify,
       this.surveyMapper,
+      this.surveyCache,
     )
   }
 }
