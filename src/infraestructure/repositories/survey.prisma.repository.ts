@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
 import { Survey } from 'src/domain/entities'
 import { SurveyRepository } from 'src/domain/repositories/survey.repository'
+import { InjectableCustom } from 'src/shared/decorators'
 import { PrismaService } from 'src/shared/services/prisma.service'
 
-@Injectable()
+@InjectableCustom()
 export class SurveyPrismaRepository implements SurveyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
