@@ -36,11 +36,13 @@ export class SurveyGateway
     @MessageBody()
     data: {
       surveyId: string
+      totalVotes: number
       options: ISurveyOptionPrimitive[]
     },
   ) {
     this.server.emit('vote-update', {
       surveyId: data.surveyId,
+      totalVotes: data.totalVotes,
       options: data.options,
     })
   }

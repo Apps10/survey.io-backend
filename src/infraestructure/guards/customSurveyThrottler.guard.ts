@@ -2,6 +2,7 @@ import { Reflector } from '@nestjs/core'
 import { User, UserRole } from 'src/domain/entities'
 import { ExecutionContext, Injectable } from '@nestjs/common'
 import {
+  seconds,
   ThrottlerGuard,
   ThrottlerModuleOptions,
   ThrottlerRequest,
@@ -23,16 +24,16 @@ export class CustomSurveyThrottlerGuard extends ThrottlerGuard {
   private readonly prefix = 'rate-limit:survey'
   private readonly MAX_RATE_LIMIT_BY_ROLE: RateLimitCustomObjects = {
     user: {
-      ttlInSeconds: 60,
-      rateLimit: 2,
+      ttlInSeconds: 10,
+      rateLimit: 5,
     },
     admin: {
-      ttlInSeconds: 60,
+      ttlInSeconds: 10,
       rateLimit: 10,
     },
     guest: {
-      ttlInSeconds: 60 * 60, //1 hora
-      rateLimit: 2,
+      ttlInSeconds: 1,
+      rateLimit: 1,
     },
   }
 
@@ -49,6 +50,7 @@ export class CustomSurveyThrottlerGuard extends ThrottlerGuard {
       ...requestProps,
       limit: this.getLimit(requestProps.context),
       ttl: this.getTTL(requestProps.context),
+      blockDuration: this.getTTL(requestProps.context),
     })
   }
 
@@ -73,7 +75,7 @@ export class CustomSurveyThrottlerGuard extends ThrottlerGuard {
   }
 
   protected getTTL(context: ExecutionContext): number {
-    return this.getCustomLimit(context).ttlInSeconds
+    return seconds(this.getCustomLimit(context).ttlInSeconds)
   }
 
   private getSurveyId(req: CustomRequest) {
