@@ -28,8 +28,8 @@ export class SurveyOption {
       throw new Error('surveyId must be a string of at least 5 characters')
     }
 
-    if (this.text.length < 5 || typeof this.text != 'string') {
-      throw new Error('text must be a string of at least 5 characters')
+    if (this.text.length < 2 || typeof this.text != 'string') {
+      throw new Error('text must be a string of at least 2 characters')
     }
 
     if (this.countVotes < 0 || typeof this.countVotes != 'number') {

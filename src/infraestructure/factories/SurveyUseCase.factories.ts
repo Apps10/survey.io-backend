@@ -29,7 +29,11 @@ export class SurveyUseCaseFactoryImp implements SurveyUseCaseFactory {
   ) {}
 
   createSurvey(): CreateSurveyUseCase {
-    return new CreateSurveyUseCase(this.surveyRepo, this.surveyCache)
+    return new CreateSurveyUseCase(
+      this.surveyRepo,
+      this.surveyCache,
+      this.surveyNotify,
+    )
   }
 
   getAllSurveys(): GetAllSurveysUseCase {

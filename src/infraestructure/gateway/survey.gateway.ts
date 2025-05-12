@@ -7,7 +7,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { ISurveyOptionPrimitive } from 'src/domain/entities'
+import { ISurveyOptionPrimitive, ISurveyPrimivite } from 'src/domain/entities'
 
 @WebSocketGateway({
   cors: {
@@ -40,10 +40,19 @@ export class SurveyGateway
       options: ISurveyOptionPrimitive[]
     },
   ) {
-    this.server.emit('vote-update', {
+    this.server.emit('survey:newVote', {
       surveyId: data.surveyId,
       totalVotes: data.totalVotes,
       options: data.options,
+    })
+  }
+
+  handleNewSurvey(
+    @MessageBody()
+    survey: ISurveyPrimivite,
+  ) {
+    this.server.emit('survey:new', {
+      ...survey,
     })
   }
 }

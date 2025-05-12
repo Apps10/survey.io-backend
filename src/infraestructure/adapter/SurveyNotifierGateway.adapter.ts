@@ -1,6 +1,6 @@
 import { SurveyNotifierService } from 'src/domain/services'
 import { SurveyGateway } from '../gateway'
-import { ISurveyOptionPrimitive } from 'src/domain/entities'
+import { ISurveyOptionPrimitive, ISurveyPrimivite } from 'src/domain/entities'
 import { InjectableCustom } from 'src/shared/decorators'
 
 @InjectableCustom()
@@ -16,6 +16,12 @@ export class SurveyNotifierGatewayAdapter implements SurveyNotifierService {
       surveyId,
       totalVotes: totalVotes,
       options: surveyOptions,
+    })
+  }
+
+  NotifyNewSurvey(Survey: ISurveyPrimivite): void {
+    this.surveyGateway.handleNewSurvey({
+      ...Survey,
     })
   }
 }

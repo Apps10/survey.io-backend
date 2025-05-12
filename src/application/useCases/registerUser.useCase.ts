@@ -1,4 +1,4 @@
-import { User } from 'src/domain/entities'
+import { User, UserPrimitive } from 'src/domain/entities'
 import { RegisterUserDto } from '../dtos/user.dto'
 import { UserAlreadyExistException } from 'src/domain/exceptions'
 import { HashService, JwtService } from 'src/domain/services'
@@ -10,7 +10,9 @@ export class RegisterUserUseCase {
     private readonly jwtService: JwtService,
   ) {}
 
-  async execute(dto: RegisterUserDto): Promise<{ token: string }> {
+  async execute(
+    dto: RegisterUserDto,
+  ): Promise<{ token: string; user: Omit<UserPrimitive, 'password'> }> {
     const userExist = await this.userRepo.findByEmail(dto.email)
 
     if (userExist) {
@@ -28,6 +30,6 @@ export class RegisterUserUseCase {
     const { password, ...payload } = dto
     const token = this.jwtService.sign(payload)
 
-    return { token }
+    return { token, user: payload }
   }
 }

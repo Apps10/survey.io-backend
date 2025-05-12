@@ -1,4 +1,4 @@
-import { User } from 'src/domain/entities'
+import { User, UserPrimitive } from 'src/domain/entities'
 import { UserUnAuthorizedException } from 'src/domain/exceptions'
 import { UserRepository } from 'src/domain/repositories'
 import { HashService, JwtService } from 'src/domain/services'
@@ -9,7 +9,10 @@ export class LoginUserUseCase {
     private readonly jwtService: JwtService,
   ) {}
 
-  async execute(email: string, password: string): Promise<{ token: string }> {
+  async execute(
+    email: string,
+    password: string,
+  ): Promise<{ token: string; user: Omit<UserPrimitive, 'password'> }> {
     const user = await this.userRepository.findByEmail(email)
     if (
       !user ||
@@ -20,6 +23,6 @@ export class LoginUserUseCase {
 
     const { password: _p, ...obj } = user as User
     const token = this.jwtService.sign(obj)
-    return { token }
+    return { token, user: obj }
   }
 }
