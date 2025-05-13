@@ -88,11 +88,19 @@ npx prisma migrate dev --name init
 npm run start:dev
 ```
 
+- Levantar redis y db:
+
+```bash
+docker compose up -d
+```
+
+
 ## 🔒 Autenticación
 
 - Login y registro con email + contraseña
 - JWT + Roles (`user`, `admin`)
 - Guards y decorators personalizados
+- RateLimit por ruta y por rol
 
 ## 📡 Encuestas en tiempo real
 
@@ -113,15 +121,26 @@ npm run start:dev
 > Algunos endpoints requieren token JWT.
 
 
-## 🐳 Docker (opcional)
+## 🐳 Como ejecutarlo
 
-Si deseas usar Docker:
+1) para ejecutar los servicios como redis y postgres ejecuta el comando:
 
 ```bash
 docker-compose up --build
 ```
 
-Asegúrate de tener `Dockerfile` y `docker-compose.yml` configurados.
+2) ejecuta el backend:
+
+```bash
+npm run start:dev
+```
+
+3) ejecuta las migraciones:
+
+```bash
+npx prisma migrate deploy
+```
+
 
 ## 👨‍💻 Autor
 
