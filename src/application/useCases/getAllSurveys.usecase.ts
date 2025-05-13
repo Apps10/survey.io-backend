@@ -20,7 +20,7 @@ export class GetAllSurveysUseCase {
 
     const surveys = await this.surveyRepo.findAll()
 
-    if (!surveys) {
+    if (surveys.length > 0) {
       throw new SurveysNotExistException()
     }
     await this.surveyCache.setMany(

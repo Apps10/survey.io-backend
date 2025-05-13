@@ -5,9 +5,7 @@ export class Vote {
     public readonly optionId: string,
     public readonly createdAt: Date = new Date(),
   ) {
-    {
-      this.ensureIsValid()
-    }
+    this.ensureIsValid()
   }
 
   private ensureIsValid() {

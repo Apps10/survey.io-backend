@@ -14,7 +14,7 @@ export class Survey {
     public readonly question: string,
     public totalVotes: number,
     public readonly isActive: boolean,
-    public readonly options: SurveyOption[] = [], // 👈 obliga a crear al menos una opcion
+    public readonly options: SurveyOption[] = [],
     public readonly createdAt: Date,
   ) {
     this.ensureIsValid()
